@@ -40,15 +40,6 @@
   <div id="storage-usage"></div>
 
   <script>
-    // ローカルストレージの容量を取得する関数
-    function getStorageUsage() {
-      try {
-        return localStorage.length * 100 / (localStorage.getItem('quota') / 1024);
-      } catch (error) {
-        return 0;
-      }
-    }
-
     // ローカルストレージにランダムな文字列を保存する関数
     function saveRandomString() {
       // ランダムな文字列を生成
@@ -75,7 +66,7 @@
         }
       }
       // ローカルストレージの容量を更新
-      document.getElementById('storage-usage').textContent = `ローカルストレージ使用率: ${getStorageUsage().toFixed(2)}%`;
+      document.getElementById('storage-usage').textContent = `ローカルストレージ使用状況: ${localStorage.length} / 約10000`;
       // 10ミリ秒後に再実行
       setTimeout(saveLoop, 10);
     }
