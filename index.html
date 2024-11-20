@@ -42,12 +42,17 @@
   <script>
     // ローカルストレージにランダムな文字列を保存する関数
     function saveRandomString() {
-      // ランダムな文字列を生成
-      const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      // 1000個のランダムな文字列を生成
+      const randomStrings = [];
+      for (let i = 0; i < 1000; i++) {
+        randomStrings.push(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
+      }
 
       // ローカルストレージに保存
       try {
-        localStorage.setItem('randomString', randomString);
+        for (let i = 0; i < randomStrings.length; i++) {
+          localStorage.setItem('randomString' + (localStorage.length + i), randomStrings[i]);
+        }
         return true; // 保存成功
       } catch (error) {
         // ローカルストレージがいっぱいになった場合、エラー処理
@@ -58,17 +63,15 @@
       }
     }
 
-    // 1tickに10回保存する処理
+    // 1tickに1回保存する処理
     function saveLoop() {
-      for (let i = 0; i < 10; i++) {
-        if (!saveRandomString()) {
-          break; // 保存に失敗したらループを終了
-        }
+      if (!saveRandomString()) {
+        return; // 保存に失敗したらループを終了
       }
       // ローカルストレージの容量を更新
       document.getElementById('storage-usage').textContent = `ローカルストレージ使用状況: ${localStorage.length} / 約10000`;
-      // 10ミリ秒後に再実行
-      setTimeout(saveLoop, 10);
+      // 1ミリ秒後に再実行
+      setTimeout(saveLoop, 1);
     }
 
     // サイトにアクセスしたら実行
