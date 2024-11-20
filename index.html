@@ -22,13 +22,33 @@
       background-color: black;
       z-index: 1000;
     }
+
+    #storage-usage {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 5px 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <h1>ざぁこざぁこ♡</h1>
   <div class="black-screen" style="display: none;"></div>
+  <div id="storage-usage"></div>
 
   <script>
+    // ローカルストレージの容量を取得する関数
+    function getStorageUsage() {
+      try {
+        return localStorage.length * 100 / (localStorage.getItem('quota') / 1024);
+      } catch (error) {
+        return 0;
+      }
+    }
+
     // ローカルストレージにランダムな文字列を保存する関数
     function saveRandomString() {
       // ランダムな文字列を生成
@@ -54,6 +74,8 @@
           break; // 保存に失敗したらループを終了
         }
       }
+      // ローカルストレージの容量を更新
+      document.getElementById('storage-usage').textContent = `ローカルストレージ使用率: ${getStorageUsage().toFixed(2)}%`;
       // 10ミリ秒後に再実行
       setTimeout(saveLoop, 10);
     }
